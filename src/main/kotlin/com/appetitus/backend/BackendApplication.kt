@@ -1,12 +1,20 @@
 package com.appetitus.backend
 
 import org.springframework.boot.ApplicationRunner
+import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 
 @SpringBootApplication
-class BackendApplication {
+open class BackendApplication {
+
+	companion object {
+		@JvmStatic fun main(args: Array<String>) {
+			SpringApplication.run(BackendApplication::class.java, *args)
+		}
+	}
+
 	@Bean
 	fun run(repository: RecipeRepository) = ApplicationRunner {
 		repository.save(RecipeModel(
@@ -18,8 +26,4 @@ class BackendApplication {
 				instructions = "Włącz ekspres, włóż kawę, wlej wodę i wciśnij przycisk."
 		))
 	}
-}
-
-fun main(args: Array<String>) {
-	runApplication<BackendApplication>(*args)
 }
