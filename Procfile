@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar build/libs/appetitus-backend.jar -Dserver.port=$PORT $JAR_OPTS
+web: java -jar build/libs/appetitus-backend.jar
