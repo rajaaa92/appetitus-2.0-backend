@@ -21,20 +21,11 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .and()
                 .cors()
+                .configurationSource({ request-> CorsConfiguration().applyPermitDefaultValues() })
                 .and()
                 .oauth2ResourceServer().jwt();
 
         // Send a 401 message to the browser (w/o this, you'll see a blank page)
         Okta.configureResourceServer401ResponseBody(http);
-    }
-
-    @Bean
-    fun corsConfigurationSource(): CorsConfigurationSource? {
-        val configuration = CorsConfiguration()
-        configuration.allowedOrigins = listOf(System.getenv("FRONTEND_HOST"))
-        configuration.allowedMethods = listOf("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH")
-        val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", configuration)
-        return source
     }
 }
